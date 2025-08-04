@@ -25,5 +25,7 @@ public class Main {
         System.out.println(num);
         numberAddition();
         System.out.println(num);
+        numberAddition();
+        System.out.println(num);
     }
 }
