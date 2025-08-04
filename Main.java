@@ -21,7 +21,6 @@ public class Main {
         System.out.println(youngThug.hello());
         numberAddition();
         System.out.println(num);
-        numberAddition();
-        System.out.println(num);
+
     }
 }
