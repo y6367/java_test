@@ -1,9 +1,9 @@
-public class Main {
+public class Rapper {
 
     String name;
     static int num;
 
-    public Main(String rapName) {
+    public Rapper(String rapName) {
         name = rapName;
     }
 
@@ -16,7 +16,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main youngThug = new Main("Young Thug");
+        Rapper youngThug = new Rapper("Young Thug");
         System.out.println(youngThug.name);
         System.out.println(youngThug.hello());
         numberAddition();
