@@ -28,14 +28,7 @@ public class Student {
         return grades;
     }
 
-
-
-    public static void main(String[] args) {
-        Student s1 = new Student(getName(), getGrades());
-
-        System.out.println(s1.name);
-        System.out.println("Entered grades: " + Arrays.toString(s1.grades));
-
+    static int[] sortGrades(Student s1) {
         for (int i = 0; i < 5; i++) {
             for (int j = i; j > 0; j--) {
                 int temp = 0;
@@ -48,13 +41,46 @@ public class Student {
                 }
             }
         }
-        System.out.println("Sorted grades: " + Arrays.toString(s1.grades));
+        return s1.grades;
+    }
 
+    static int getAverage(Student s1) {
         int average = 0;
         for (int i = 0; i < s1.grades.length; i++) {
             average += s1.grades[i];
         }
-        System.out.println("Average grade: " + average / s1.grades.length);
+        return average / s1.grades.length;
+    }
+
+    static char letterGrade(int average) {
+        if (average > 90) {
+            return 'A';
+        } else if (average > 80) {
+            return 'B';
+        } else if (average > 70) {
+            return 'C';
+        } else if (average > 60) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        Student s1 = new Student(getName(), getGrades());
+
+        System.out.println(s1.name);
+        System.out.println("Entered grades: " + Arrays.toString(s1.grades));
+
+
+        System.out.println("Sorted grades: " + Arrays.toString(sortGrades(s1)));
+
+
+        System.out.println("Average grade: " + getAverage(s1));
+
+        System.out.println(letterGrade(getAverage(s1)));
 
 
 //        System.out.print("Enter your name: ");
