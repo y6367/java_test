@@ -9,6 +9,7 @@ public class Management {
         PartTimeEmployee pte2 = new PartTimeEmployee("Janet", 2,47000,true, 1200);
 
         System.out.println(fte1.calculateSalary());
+        System.out.println(pte1.calculateSalary());
         System.out.println(fte1.printSalary());
         System.out.println(pte1.printSalary());
         System.out.println(pte2.printSalary());
