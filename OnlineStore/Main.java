@@ -4,16 +4,16 @@ import java.util.Scanner;
 
 public class Main {
 
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 //    String clothes = {c1.name,c2.name,c3.name};
 
-    ArrayList<String> items = new ArrayList<String>();
-    ArrayList<Integer> price = new ArrayList<Integer>();
+    static ArrayList<String> items = new ArrayList<String>();
+    static ArrayList<Integer> price = new ArrayList<Integer>();
 
 
-    Clothing c1 = new Clothing("Rick & Morty T-shirt", 40);
-    Clothing c2 = new Clothing("ATL Jeans", 200);
-    Clothing c3 = new Clothing("French Trench Coat", 350);
+    static Clothing c1 = new Clothing("Rick & Morty T-shirt", 40);
+    static Clothing c2 = new Clothing("ATL Jeans", 200);
+    static Clothing c3 = new Clothing("French Trench Coat", 350);
 
 
     Electronics e1 = new Electronics("Iphone", 700);
@@ -24,10 +24,14 @@ public class Main {
     Food f2 = new Food("Steak", 40);
     Food f3 = new Food("Lobster", 40);
 
-    String[] clothingName = {c1.name, c2.name, c3.name};
+    static String[] clothingName = {c1.name, c2.name, c3.name};
     String[] foodName = {f1.name, f2.name, f3.name};
     String[] electronicsName = {e1.name, e2.name, e3.name};
-    public void getPurchase() {
+    static int[] clothingPrice = {c1.price, c2.price, c3.price};
+    int[] foodPrice = {f1.price, f2.price, f3.price};
+    int[] electronicsPrice = {c1.price, c2.price, c3.price};
+
+    public static void getPurchase() {
         System.out.println("====================\nMain Menu\n=====================");
         System.out.println("1. Clothing");
         System.out.println("2. Electronics");
@@ -37,40 +41,47 @@ public class Main {
 
         switch (input) {
             case 1:
-                while (true) {
-                    System.out.println("====================\nClothing\n=====================");
-                    System.out.println("1. Rick & Morty T-shirt");
-                    System.out.println("2. ATL Jeans");
-                    System.out.println("3. French Trench Coat");
-                    System.out.println("Enter your choice by number (1, 2, 3)");
-                    input = scanner.nextInt();
+                System.out.println("====================\nClothing\n=====================");
+                System.out.println("1. Rick & Morty T-shirt");
+                System.out.println("2. ATL Jeans");
+                System.out.println("3. French Trench Coat");
+                System.out.println("Enter your choice by number (1, 2, 3)");
+                input = scanner.nextInt();
+
+                System.out.println("Please confirm " + clothingName[input-1] + "for $" + clothingPrice[input-1] + ". Type yes or no");
+                String confirm = scanner.next();
+                if (confirm.equals("yes")) {
+                    items.add(clothingName[input-1]);
+                    price.add(clothingPrice[input-1]);
+                    System.out.println(clothingName[input-1] + " has been added to cart!");
+                    break;
+                }
+                else {
+                    System.out.println("Item not added to cart");
+                    break;
                 }
 
             case 2:
-                while (true) {
-                    System.out.println("====================\nElectronics\n=====================");
-                    System.out.println("1. Iphone");
-                    System.out.println("2. AirPods");
-                    System.out.println("3. Macbook");
-                    System.out.println("Enter your choice by number (1, 2, 3)");
-                    input = scanner.nextInt();
-                }
+                System.out.println("====================\nElectronics\n=====================");
+                System.out.println("1. Iphone");
+                System.out.println("2. AirPods");
+                System.out.println("3. Macbook");
+                System.out.println("Enter your choice by number (1, 2, 3)");
+                input = scanner.nextInt();
 
             case 3:
-                while (true) {
-                    System.out.println("====================\nFood\n=====================");
-                    System.out.println("1. Bread");
-                    System.out.println("2. Steak");
-                    System.out.println("3. Lobster");
-                    System.out.println("Enter your choice by number (1, 2, 3)");
-                    input = scanner.nextInt();
-                    System.out.println();
-                }
+                System.out.println("====================\nFood\n=====================");
+                System.out.println("1. Bread");
+                System.out.println("2. Steak");
+                System.out.println("3. Lobster");
+                System.out.println("Enter your choice by number (1, 2, 3)");
+                input = scanner.nextInt();
+                System.out.println();
 
         }
     }
 
     public static void main(String[] args) {
-
+        getPurchase();
     }
 }
