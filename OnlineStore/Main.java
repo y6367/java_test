@@ -1,6 +1,7 @@
 package OnlineStore;
 import java.util.ArrayList;
 import java.util.Scanner;
+import PaymentProccessor.*;
 
 public class Main {
 
@@ -24,12 +25,14 @@ public class Main {
     static Food f2 = new Food("Steak", 40);
     static Food f3 = new Food("Lobster", 40);
 
-    static String[] clothingName = {c1.name, c2.name, c3.name};
-    static String[] foodName = {f1.name, f2.name, f3.name};
-    static String[] electronicsName = {e1.name, e2.name, e3.name};
-    static int[] clothingPrice = {c1.price, c2.price, c3.price};
-    static int[] foodPrice = {f1.price, f2.price, f3.price};
-    static int[] electronicsPrice = {c1.price, c2.price, c3.price};
+    static String[] clothingName = {c1.getName(), c2.getName(), c3.getName()};
+    static String[] foodName = {f1.getName(), f2.getName(), f3.getName()};
+    static String[] electronicsName = {e1.getName(), e2.getName(), e3.getName()};
+    static int[] clothingPrice = {c1.getPrice(), c2.getPrice(), c3.getPrice()};
+    static int[] foodPrice = {f1.getPrice(), f2.getPrice(), f3.getPrice()};
+    static int[] electronicsPrice = {e1.getPrice(), e2.getPrice(), e3.getPrice()};
+
+    static String[] paymentOptions = {"Bank Transfer", "Credit Card Payment", "Paypal Payment"};
 
     public static void getConfirmation(String[] categoryName, int[] categoryPrice, int input) {
         System.out.println("Please confirm " + categoryName[input-1] + "for $" + categoryPrice[input-1] + ". Type 1 or 2");
@@ -106,15 +109,22 @@ public class Main {
                     }
                     System.out.println("You owe $" + total);
 
-                    System.out.println("Please confirm to pay $" + total + " type 1 or 2");
-                    int confirm = scanner.nextInt();
+//                    System.out.println("Please confirm to pay $" + total + " type 1 or 2");
+//                    int confirm = scanner.nextInt();
+
+                    System.out.println("Please enter the method you want to pay");
+                    System.out.println("1. Bank Transfer");
+                    System.out.println("2. Credit Card Payment");
+                    System.out.println("3. Paypal Payment");
+                    int confirm =  scanner.nextInt();
+                    System.out.println("Please confirm you want to pay with: " + paymentOptions[confirm-1] + ", type 1 or 2");
+                    confirm = scanner.nextInt();
                     if (confirm == 1) {
-                        System.out.println("You paid $" + total + ", have a good day!");
+                        System.out.println("You've successfully used " + paymentOptions[confirm-1] + " to pay $" + total + ". Have a great day!");
                         running = false;
                         break;
-                    }
-                    else {
-                        System.out.println("Cart has not been paid");
+                    } else if (confirm == 2) {
+                        System.out.println("Payment failed, please try again");
                         break;
                     }
             }
