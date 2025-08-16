@@ -8,8 +8,8 @@ public abstract class Payments {
         this.amount = amount;
     }
 
-    abstract public void pay();
-    void confirmation() {
+    abstract public String pay();
+    public void confirmation() {
         System.out.println(this.name + " paid $" + this.amount);
     }
 }
