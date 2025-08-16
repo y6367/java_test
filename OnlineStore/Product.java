@@ -8,9 +8,12 @@ public abstract class Product {
         this.price = price;
     }
 
-    void getInfo() {
-        System.out.println("Name: " + name);
-        System.out.println("Price: " + price);
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     abstract void getCategory();
