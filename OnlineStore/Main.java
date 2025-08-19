@@ -2,6 +2,7 @@ package OnlineStore;
 import java.util.ArrayList;
 import java.util.Scanner;
 import PaymentProccessor.*;
+import java.util.HashMap;
 
 public class Main {
 
@@ -10,6 +11,8 @@ public class Main {
 
     static ArrayList<String> items = new ArrayList<String>();
     static ArrayList<Integer> price = new ArrayList<Integer>();
+
+    static HashMap<String, Integer> map = new HashMap<>();
 
 
     static Clothing c1 = new Clothing("Rick & Morty T-shirt", 40);
@@ -35,7 +38,7 @@ public class Main {
     static String[] paymentOptions = {"Bank Transfer", "Credit Card Payment", "Paypal Payment"};
 
     public static void getConfirmation(String[] categoryName, int[] categoryPrice, int input) {
-        System.out.println("Please confirm " + categoryName[input-1] + "for $" + categoryPrice[input-1] + ". Type 1 or 2");
+        System.out.println("Please confirm " + categoryName[input-1] + "for $ " + categoryPrice[input-1] + ". Type 1 or 2");
         int confirm = scanner.nextInt();
         if (confirm == 1) {
             items.add(categoryName[input-1]);
@@ -95,10 +98,16 @@ public class Main {
 
                 case 4:
                     System.out.println("Cart");
-                    for (int i = 0; i < items.size(); i++) {
-                        System.out.print((i + 1) + ". " + items.get(i));
-                        System.out.println(" for $" + price.get(i));
+                    System.out.println("Quanity | Price | Item");
+//                    for (int i = 0; i < items.size(); i++) {
+//                        System.out.print((i + 1) + ". " + items.get(i));
+//                        System.out.println(" for $" + price.get(i));
+//                    }
+                    for (int i =0; i < items.size(); i++) {
+                        String key = "$" + price.get(i) + " - " + items.get(i);
+                        map.put(key, map.getOrDefault(key, 0) + 1);
                     }
+                    map.forEach((k, v) -> System.out.println(v + "x - " + k));
                     break;
 
                 case 5:
