@@ -6,7 +6,8 @@
 
 import java.util.*;
 
-//This class is ...
+// This class is a music box. It takes in melodies and the length of each melody and returns
+// the melodies in a 2D array. It also finds the most common natural note for each melody.
 public class MusicBox {
     public static final String NOTES = "CDEFGAB";
     public static final String SHARP = "♯";
@@ -22,10 +23,19 @@ public class MusicBox {
             }
             System.out.println();
         }
+
+        String[] mostCommon = mostCommonNaturals(song);
+        System.out.println("Most common natural notes in an array:");
+        for (int i = 0; i < mostCommon.length; i++) {
+            System.out.print(mostCommon[i] + " ");
+        }
     }
 
     // TODO: write the composeSong method and helper methods here
 
+    // This method takes melodies and notes and output them into the console as a 2D array.
+    // It returns a song with the given notes and melodies entered by the user.
+    // There is a Scanner parameter in order to get notes and melodies from the user.
     public static String[][] composeSong(Scanner console) {
         int melodiesNum = getMelodies(console);
         int lengthNum = getLength(console);
@@ -44,35 +54,69 @@ public class MusicBox {
         }
         return song;
     }
+
+    // This method takes the number of melodies from the user and put them into an integer.
+    // It returns an integer that has the number of melodies entered by the user.
+    // There is a Scanner parameter in order to get melodies from the user.
     public static int getMelodies(Scanner console) {
         System.out.print("Enter the number of melodies: ");
         String melodies = console.nextLine();
         return Integer.parseInt(melodies);
     }
 
+    // This method takes the length of melodies from the user and put them into an integer.
+    // It returns an integer that has the length of melodies entered by the user.
+    // There is a Scanner parameter in order to get the length of melodies from the user.
     public static int getLength(Scanner console) {
         System.out.print("Enter the length of each melody: ");
         String length = console.nextLine();
         return Integer.parseInt(length);
     }
 
+    // This method calculates the most common naturals in each melody entered by the user.
+    // It returns a String array with the most common natural notes for each melody.
+    // There is a 2D String array as a parameter in order to get notes and melodies entered from user.
     public static String[] mostCommonNaturals(String[][] song) {
         String[] naturalsArray = new String[song.length];
-        String[] normalNotes = NOTES.split("");
-        int[] notesTracker = new int[normalNotes.length];
 
         for (int i = 0; i < song.length; i++) {
-            for (int j = 0; j < song[i].length; j++) {
-                for (int k = 0; k < normalNotes.length; k++) {
-                    if (song[i][j].equals(normalNotes[k])) {
-                        notesTracker[k]++;
-                    }
-                }
-            }
-            naturalsArray[i] = song[i][song[0].length - 1];
+            int[] notesTracker = new int[NOTES.length()];
+
+            sortNaturals(song[i], notesTracker);
+            // Set variables after the array of naturals have been initalized.
+            int mostCommonIndex = 0;
+            int mostCommonNote = notesTracker[0];
+
+            mostCommonIndex = mostNaturals(notesTracker, mostCommonNote, mostCommonIndex);
+            naturalsArray[i] = String.valueOf(NOTES.charAt(mostCommonIndex));
         }
 
-
         return naturalsArray;
+    }
+
+    // This method sorts the natural notes for each melody into an array.
+    // It returns an update to the notesTracker array to list each time a note was found.
+    // There is a String array and an integer array as parameters.
+    public static void sortNaturals(String[] songLine, int[] notesTracker) {
+        for (int j = 0; j < songLine.length; j++) {
+            for (int k = 0; k < NOTES.length(); k++) {
+                if (songLine[j].equals(String.valueOf(NOTES.charAt(k)))) {
+                    notesTracker[k]++;
+                }
+            }
+        }
+    }
+
+    // This method identifies the most natural notes in each melody.
+    // It returns an integer of the index of the most found note in the notesTracker array.
+    // There is an integer array notesTracker, integer mostCommonNote, and integer mostCommonIndex
+    public static int mostNaturals(int[] notesTracker, int mostCommonNote, int mostCommonIndex) {
+        for (int j = 1; j < NOTES.length(); j++) {
+            if (notesTracker[j] > mostCommonNote) {
+                mostCommonNote = notesTracker[j];
+                mostCommonIndex = j;
+            }
+        }
+        return mostCommonIndex;
     }
 }
