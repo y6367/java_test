@@ -25,7 +25,7 @@ public class MusicBox {
         }
 
         String[] mostCommon = mostCommonNaturals(song);
-        System.out.println("Most common natural notes in an array:");
+        System.out.println("Most common natural notes in each melody:");
         for (int i = 0; i < mostCommon.length; i++) {
             System.out.print(mostCommon[i] + " ");
         }
