@@ -24,34 +24,26 @@ public class MusicBox {
             System.out.println();
         }
 
-        String[] mostCommon = mostCommonNaturals(song);
-        System.out.println("Most common natural notes in each melody:");
-        for (int i = 0; i < mostCommon.length; i++) {
-            System.out.print(mostCommon[i] + " ");
-        }
+        // Creative extension for mostCommonNaturals below:
+        // mostCommonNaturals(song);
+
+//        String[] mostCommon = mostCommonNaturals(song);
+//        System.out.println("Most common natural notes in each melody:");
+//        for (int i = 0; i < mostCommon.length; i++) {
+//            System.out.print(mostCommon[i] + " ");
+//        }
     }
 
     // TODO: write the composeSong method and helper methods here
-
     // This method takes melodies and notes and output them as a 2D array.
     // Returns: 2D string array with the given notes and melodies entered by the user.
     // Parameters: Scanner parameter in order to get input.
     public static String[][] composeSong(Scanner console) {
         int melodiesNum = getMelodies(console);
         int lengthNum = getLength(console);
-
         System.out.println();
-
         String[][] song = new String[melodiesNum][lengthNum];
-
-        for (int i = 0; i < melodiesNum; i++) {
-            System.out.println("Composing melody #" + (i + 1));
-            for (int j = 0; j < lengthNum; j++) {
-                System.out.print("Enter note #" + (j + 1) + ": ");
-                song[i][j] = console.next();
-            }
-            System.out.println();
-        }
+        getNotes(console, melodiesNum, lengthNum, song);
         return song;
     }
 
@@ -71,6 +63,24 @@ public class MusicBox {
         System.out.print("Enter the length of each melody: ");
         String length = console.nextLine();
         return Integer.parseInt(length);
+    }
+
+    // This method gets notes for each melody
+    // Returns: an update to the song array with filled out notes
+    // Parameters:
+    // Scanner console to receive user input,
+    // integer melodiesNum to know how many melodies there are,
+    // integer lengthNum to know how long each melody is,
+    // 2D String array to have an array to put notes into.
+    public static void getNotes(Scanner console, int melodiesNum, int lengthNum, String[][] song) {
+        for (int i = 0; i < melodiesNum; i++) {
+            System.out.println("Composing melody #" + (i + 1));
+            for (int j = 0; j < lengthNum; j++) {
+                System.out.print("  Enter note #" + (j + 1) + ": ");
+                song[i][j] = console.next();
+            }
+            System.out.println();
+        }
     }
 
     // This method calculates the most common naturals in each melody.
