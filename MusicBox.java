@@ -87,8 +87,10 @@ public class MusicBox {
     // Returns: String array with the most common natural notes for each melody.
     // Parameters: 2D String array to get notes and melodies entered previously.
     public static String[] mostCommonNaturals(String[][] song) {
+        // to store the most common naturals for each melody in an array
         String[] naturalsArray = new String[song.length];
 
+        // to go through every melody in the song
         for (int i = 0; i < song.length; i++) {
             // A way to mark each time a note has been found.
             int[] notesTracker = new int[NOTES.length()];
@@ -112,7 +114,9 @@ public class MusicBox {
     // String array to get current melody,
     // integer array to track each time a note is found in melody.
     public static void sortNaturals(String[] songLine, int[] notesTracker) {
+        // to go through each note in a melody
         for (int j = 0; j < songLine.length; j++) {
+            // to go through the note and see if it matches with a natural
             for (int k = 0; k < NOTES.length(); k++) {
                 // Turns char into string to compare with string.
                 if (songLine[j].equals(String.valueOf(NOTES.charAt(k)))) {
@@ -129,6 +133,8 @@ public class MusicBox {
     // integer mostCommonIndex is the most common index in melody,
     // integer maxCount is the value of the most common index.
     public static int mostNaturals(int[] notesTracker, int mostCommonIndex, int maxCount) {
+        // find the natural with the biggest value
+        // maxCount and mostCommonIndex are assigned to index 0, this is why for loop starts at 1
         for (int j = 1; j < NOTES.length(); j++) {
             if (notesTracker[j] > maxCount) {
                 maxCount = notesTracker[j];
