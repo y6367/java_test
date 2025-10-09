@@ -1,7 +1,7 @@
 // Joewah Yu
 // 09/29/2025
 // CSE 122
-// P0: Warm Up
+// C0: Warm Up
 // TA: Katharine Zhang
 
 import java.util.*;
@@ -53,7 +53,7 @@ public class MusicBox {
     public static int getMelodies(Scanner console) {
         System.out.print("Enter the number of melodies: ");
         String melodies = console.nextLine();
-        return Integer.parseInt(melodies);
+            return Integer.parseInt(melodies);
     }
 
     // This method takes the length of each melody from the user.
