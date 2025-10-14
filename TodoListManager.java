@@ -12,9 +12,7 @@ public class TodoListManager {
         System.out.println("What would you like to do?");
         System.out.print("(A)dd TODO, (M)ark TODO as done, (L)oad TODOs, (S)ave TODOs, (Q)uit? ");
         String userAction = console.nextLine();
-        while (userAction.equalsIgnoreCase("a") || userAction.equalsIgnoreCase("m") ||
-                userAction.equalsIgnoreCase("l") || userAction.equalsIgnoreCase("s") ||
-                !userAction.equalsIgnoreCase("q")) {
+        while (!userAction.equalsIgnoreCase("q")) {
             
             if (userAction.equalsIgnoreCase("a")) {
                 addItem(console, todos);
