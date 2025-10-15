@@ -17,15 +17,18 @@ public class TodoListManager {
             if (userAction.equalsIgnoreCase("a")) {
                 addItem(console, todos);
             } else if (userAction.equalsIgnoreCase("m")) {
+                markItemAsDone(console, todos);
 
             } else if (userAction.equalsIgnoreCase("l")) {
+                loadItems(console, todos);
 
             } else if (userAction.equalsIgnoreCase("s")) {
-
+                saveItems(console, todos);
             } else {
-                System.out.println("Unknown console: " + userAction);
+                System.out.println("Unknown input: " + userAction);
                 printTodos(todos);
             }
+            System.out.println("What would you like to do?");
             System.out.print("(A)dd TODO, (M)ark TODO as done, (L)oad TODOs, (S)ave TODOs, (Q)uit? ");
             userAction = console.nextLine();
         }
@@ -35,9 +38,11 @@ public class TodoListManager {
         // TODO: Your Code Here
         System.out.println("Today's TODOs:");
         for (int i = 0; i < todos.size(); i++) {
-            System.out.println((i + 1) + ": " + todos.get(i));
+            System.out.println("  " + (i + 1) + ": " + todos.get(i));
         }
-        System.out.println("  You have nothing to do yet today! Relax!");
+        if (todos.isEmpty()) {
+            System.out.println("  You have nothing to do yet today! Relax!");
+        }
     }
 
     public static void addItem(Scanner console, List<String> todos) {
@@ -62,15 +67,38 @@ public class TodoListManager {
 
     public static void markItemAsDone(Scanner console, List<String> todos) {
         // TODO: Your Code Here
+        if (todos.isEmpty()) {
+            System.out.println("All done! Nothing left to mark as done!");
+        } else {
+            System.out.print("Which item did you complete (1-" + todos.size() + ")? ");
+            int markIndex = Integer.parseInt(console.nextLine());
+            todos.remove(markIndex - 1);
+        }
+        printTodos(todos);
     }
 
     public static void loadItems(Scanner console, List<String> todos)
             throws FileNotFoundException {
+        System.out.print("File name? ");
+        String fileName = console.nextLine();
+        Scanner fileScan = new Scanner(new File(fileName));
+        todos.clear();
+        while (fileScan.hasNextLine()) {
+            todos.add(fileScan.nextLine());
+        }
+        printTodos(todos);
         // TODO: Your Code Here
     }
 
     public static void saveItems(Scanner console, List<String> todos)
             throws FileNotFoundException {
         // TODO: Your Code Here
+        System.out.print("File name? ");
+        String fileName = console.nextLine();
+        PrintStream output = new PrintStream(new File(fileName));
+        for (int i = 0; i < todos.size(); i++) {
+            output.println(todos.get(i));
+        }
+        printTodos(todos);
     }
 }
