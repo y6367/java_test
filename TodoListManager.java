@@ -1,6 +1,14 @@
+// Joewah Yu
+// 10/13/2025
+// CSE 122
+// C1: TODO list
+// TA: Katharine Zhang
+
 import java.util.*;
 import java.io.*;
 
+// This class is a Todo List simulator. You can add and remove things to then be
+// on top of your tasks.
 public class TodoListManager {
     public static final boolean EXTENSION_FLAG = false;
 
@@ -13,15 +21,17 @@ public class TodoListManager {
         System.out.print("(A)dd TODO, (M)ark TODO as done, (L)oad TODOs, (S)ave TODOs, (Q)uit? ");
         String userAction = console.nextLine();
         while (!userAction.equalsIgnoreCase("q")) {
-            
+
             if (userAction.equalsIgnoreCase("a")) {
                 addItem(console, todos);
             } else if (userAction.equalsIgnoreCase("m")) {
-                markItemAsDone(console, todos);
-
+                if (EXTENSION_FLAG) {
+                    markRangeAsDone(console, todos);
+                } else {
+                    markItemAsDone(console, todos);
+                }
             } else if (userAction.equalsIgnoreCase("l")) {
                 loadItems(console, todos);
-
             } else if (userAction.equalsIgnoreCase("s")) {
                 saveItems(console, todos);
             } else {
@@ -34,6 +44,10 @@ public class TodoListManager {
         }
     }
 
+    // This method prints the current things to do
+    // Returns: Printing to console
+    // Parameters:
+    // - ArrayList of current things to do
     public static void printTodos(List<String> todos) {
         // TODO: Your Code Here
         System.out.println("Today's TODOs:");
@@ -45,6 +59,11 @@ public class TodoListManager {
         }
     }
 
+    // This method adds events to the to do list
+    // Returns: Printing to console
+    // Parameters:
+    // - Scanner to take in user input
+    // - ArrayList of current things to do
     public static void addItem(Scanner console, List<String> todos) {
         // TODO: Your Code Here
         System.out.print("What would you like to add? ");
@@ -65,6 +84,11 @@ public class TodoListManager {
         printTodos(todos);
     }
 
+    // This method removes a single item in the to do list
+    // Returns: Printing to console
+    // Parameters:
+    // - Scanner to take in user input
+    // - ArrayList of current things to do
     public static void markItemAsDone(Scanner console, List<String> todos) {
         // TODO: Your Code Here
         if (todos.isEmpty()) {
@@ -77,6 +101,34 @@ public class TodoListManager {
         printTodos(todos);
     }
 
+    // Extension
+    // This method removes a range of items in the to do list
+    // Returns: Printing to console
+    // Parameters:
+    // - Scanner to take in user input
+    // - ArrayList of current things to do
+    public static void markRangeAsDone(Scanner console, List<String> todos) {
+        if (todos.isEmpty()) {
+            System.out.println("All done! Nothing left to mark as done!");
+        } else {
+            System.out.print("What is the first item you completed (1-" + todos.size() + ")? ");
+            int firstIndex = Integer.parseInt(console.nextLine());
+            System.out.print("What is the last item you completed (1-" + todos.size() + ")? ");
+            int lastIndex = Integer.parseInt(console.nextLine());
+            int times = lastIndex - firstIndex + 1;
+
+            for (int i = 0; i < times; i++) {
+                todos.remove(firstIndex - 1);
+            }
+            printTodos(todos);
+        }
+    }
+
+    // This method loads to do actions from a file into the current to do list
+    // Returns: Printing to console
+    // Parameters:
+    // - Scanner to take in user input
+    // - ArrayList of current things to do
     public static void loadItems(Scanner console, List<String> todos)
             throws FileNotFoundException {
         System.out.print("File name? ");
@@ -90,6 +142,11 @@ public class TodoListManager {
         // TODO: Your Code Here
     }
 
+    // This method saves to do actions into a file
+    // Returns: Printing to console
+    // Parameters:
+    // - Scanner to take in user input
+    // - ArrayList of current things to do
     public static void saveItems(Scanner console, List<String> todos)
             throws FileNotFoundException {
         // TODO: Your Code Here
