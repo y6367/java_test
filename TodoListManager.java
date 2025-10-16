@@ -39,7 +39,8 @@ public class TodoListManager {
                 printTodos(todos);
             }
             System.out.println("What would you like to do?");
-            System.out.print("(A)dd TODO, (M)ark TODO as done, (L)oad TODOs, (S)ave TODOs, (Q)uit? ");
+            System.out.print("(A)dd TODO, (M)ark TODO as done, (L)oad TODOs, (S)ave TODOs, " +
+                    "(Q)uit? ");
             userAction = console.nextLine();
         }
     }
@@ -59,7 +60,8 @@ public class TodoListManager {
         }
     }
 
-    // This method adds events to the to do list
+    // This method adds items to the to-do list, with the user being asked where the item
+    // should be placed, except for when the list is empty.
     // Returns: Printing to console
     // Parameters:
     // - Scanner to take in user input
@@ -70,9 +72,10 @@ public class TodoListManager {
         String userInput = console.nextLine();
         int userIndex;
         if (todos.size() > 0) {
-            System.out.print("Where in the list should it be (1-" + (todos.size() + 1) + ")? (Enter for end): ");
+            System.out.print("Where in the list should it be (1-" + (todos.size() + 1) + ")? " +
+                    "(Enter for end): ");
             String indexString = console.nextLine();
-            if (indexString == "") {
+            if (indexString.isEmpty()) {
                 userIndex = todos.size();
             } else {
                 userIndex = Integer.parseInt(indexString) - 1;
@@ -84,7 +87,8 @@ public class TodoListManager {
         printTodos(todos);
     }
 
-    // This method removes a single item in the to do list
+    // This method removes a single item in the to-do list only if there are items in the
+    // to-do list.
     // Returns: Printing to console
     // Parameters:
     // - Scanner to take in user input
@@ -102,7 +106,8 @@ public class TodoListManager {
     }
 
     // Extension
-    // This method removes a range of items in the to do list
+    // This method removes a range of items in the to-do list only if there are items in the
+    // to-do list.
     // Returns: Printing to console
     // Parameters:
     // - Scanner to take in user input
@@ -124,7 +129,8 @@ public class TodoListManager {
         }
     }
 
-    // This method loads to do actions from a file into the current to do list
+    // This method clears the current to-do list and loads to-do items from a file into
+    // the to-do list
     // Returns: Printing to console
     // Parameters:
     // - Scanner to take in user input
@@ -142,7 +148,7 @@ public class TodoListManager {
         // TODO: Your Code Here
     }
 
-    // This method saves to do actions into a file
+    // This method stores to-do actions into a file
     // Returns: Printing to console
     // Parameters:
     // - Scanner to take in user input

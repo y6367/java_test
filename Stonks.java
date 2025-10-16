@@ -15,8 +15,8 @@ public class Stonks {
         System.out.print("Enter stocks file name: ");
         Scanner input = new Scanner(System.in);
         String fileName = input.nextLine();
-        File f = new File(fileName);
-        Scanner fileScan = new Scanner(f);
+        File file = new File(fileName);
+        Scanner fileScan = new Scanner(file);
 
         int stockAmount = fileScan.nextInt();
         String[] stocks = new String[stockAmount];
@@ -24,49 +24,9 @@ public class Stonks {
         double[] portfolio = new double[stockAmount];
 
         setStonks(fileScan, stockAmount, stocks, prices);
-        stonksMenu(input, stockAmount, stocks, prices, portfolio);
-    }
-
-    // TODO: write your methods here
-
-    // This method loads the stonks on the market.
-    // Returns: Printing to console.
-    // Parameters:
-    // - Scanner to take in input
-    // - Integer to know the amount of stocks available.
-    // - String array to have a name of stocks
-    // - Double array to list prices for each stock.
-    public static void setStonks(Scanner fileScan, int stockAmount, String[] stocks,
-                                 double[] prices) {
-        System.out.println("");
-        System.out.println("Welcome to the CSE 122 Stocks Simulator!");
-        fileScan.nextLine();
-        fileScan.nextLine();
-        for (int i = 0; i < stockAmount; i++) {
-            stocks[i] = fileScan.next();
-            prices[i] = fileScan.nextDouble();
-            fileScan.nextLine();
-        }
-        System.out.println("There are " + stockAmount + " stocks on the market:");
-        for (int i = 0; i < stockAmount; i++) {
-            System.out.println(stocks[i] + ": " + prices[i]);
-        }
-    }
-
-    // This method loops through stock menu until user quits.
-    // Returns: Printing to console.
-    // Parameters:
-    // - Scanner to take in input
-    // - Integer to know the amount of stocks.
-    // - String array to have a name of stocks
-    // - Double array to list prices for each stock.
-    // - Double array to keep track of shares bought per stock.
-    // Exceptions: FileNotFound thrown if no file is found.
-    public static void stonksMenu(Scanner input, int stockAmount, String[] stocks, double[] prices,
-                                  double[] portfolio) throws FileNotFoundException {
         String selection = "";
         while (!selection.equals("Q") && !selection.equals("q")) {
-            System.out.println("");
+            System.out.println();
             System.out.println("Menu: (B)uy, (Se)ll, (D)isplay, (S)ave, (Q)uit");
             System.out.print("Enter your choice: ");
             selection = input.nextLine();
@@ -88,7 +48,33 @@ public class Stonks {
         }
     }
 
-    // This method buys stocks.
+    // TODO: write your methods here
+
+    // This method loads the stonks on the market.
+    // Returns: Printing to console.
+    // Parameters:
+    // - Scanner to take in input
+    // - Integer to know the amount of stocks available.
+    // - String array to have a name of stocks
+    // - Double array to list prices for each stock.
+    public static void setStonks(Scanner fileScan, int stockAmount, String[] stocks,
+                                 double[] prices) {
+        System.out.println();
+        System.out.println("Welcome to the CSE 122 Stocks Simulator!");
+        fileScan.nextLine();
+        fileScan.nextLine();
+        for (int i = 0; i < stockAmount; i++) {
+            stocks[i] = fileScan.next();
+            prices[i] = fileScan.nextDouble();
+            fileScan.nextLine();
+        }
+        System.out.println("There are " + stockAmount + " stocks on the market:");
+        for (int i = 0; i < stockAmount; i++) {
+            System.out.println(stocks[i] + ": " + prices[i]);
+        }
+    }
+
+    // This method buys stocks with a minimum purchase of $5.
     // Returns: Printing to console.
     // Parameters:
     // - Scanner to take in input
@@ -115,7 +101,7 @@ public class Stonks {
         }
     }
 
-    // This method sells stocks in portfolio
+    // This method sells stocks in portfolio only if user has enough shares to sell.
     // Returns: Printing to console.
     // Parameters:
     // - Scanner to take in input
@@ -136,7 +122,8 @@ public class Stonks {
                             " to sell " + sellAmount + " shares.");
                 } else {
                     portfolio[i] -= sellAmount;
-                    System.out.println("You successfully sold " + sellAmount + " shares of " + stock + ".");
+                    System.out.println("You successfully sold " + sellAmount +
+                            " shares of " + stock + ".");
                 }
             }
         }
@@ -188,7 +175,7 @@ public class Stonks {
         for (int i = 0; i < stockAmount; i++) {
             value += prices[i] * portfolio[i];
         }
-        System.out.println("");
+        System.out.println();
         System.out.println("Your portfolio is currently valued at: $" + value);
     }
 }
