@@ -3,39 +3,33 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        list.add(0);
-        list.add(16);
-        list.add(9);
-        list.add(1);
-        list.add(64);
-        list.add(25);
-        list.add(25);
-        list.add(14);
-        list.add(0);
+        Stack<Integer> s3 = new Stack<Integer>();
+        s3.push(2);
+        s3.push(6);
+        s3.push(1);
 
-        mystery(list);
+        mystery1(s3);
     }
 
-    public static void mystery1(ArrayList<Integer> list) {
-        for (int i = list.size() - 1; i > 0; i--) {
-            if (list.get(i) < list.get(i - 1)) {
-                int element = list.get(i);
-                list.remove(i);
-                list.add(0, element);
-            }
+    public static void mystery1(Stack<Integer> s) {
+        Queue<Integer> q = new LinkedList<Integer>();
+        while (!s.isEmpty()) {
+            int n = s.pop();
+            q.add(n);
+            q.add(n);
         }
-
-        System.out.println(list);
-
+        while (!q.isEmpty()) {
+            s.push(q.remove());
+        }
+        System.out.println(s);
     }
-    public static void mystery(ArrayList<Integer> list) {
-        for (int i = 1; i < list.size(); i += 2) {
-            if (list.get(i - 1) >= list.get(i)) {
-                list.remove(i);
-                list.add(0, 0);
+    public static List<Integer> mystery(int[][] data) {
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = 1; i < data.length; i++) {
+            for (int j = 0; j < data[i].length - 1; j++) {
+                result.add(data[i][j] - 1);
             }
         }
-        System.out.println(list);
+        return result;
     }
 }
