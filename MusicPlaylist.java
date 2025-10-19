@@ -25,6 +25,8 @@ public class MusicPlaylist {
                 String songName = console.nextLine();
                 System.out.println("Successfully added " + songName);
                 songQueue.add(songName);
+                System.out.println();
+                System.out.println();
             } else if (input.equalsIgnoreCase("p")) {
                 playSong(songQueue, songHistory);
             } else if (input.equalsIgnoreCase("h")) {
@@ -33,12 +35,14 @@ public class MusicPlaylist {
                 viewPlaylist(songQueue);
             } else if (input.equalsIgnoreCase("c")) {
                 songHistory.clear();
+                System.out.println();
             } else if (input.equalsIgnoreCase("d")) {
                 System.out.println("A positive number will delete from recent history.");
                 System.out.println("A negative number will delete from the beginning of history.");
                 System.out.print("Enter number of songs to delete: ");
                 int numDelete = Integer.parseInt(console.nextLine());
                 deleteHistory(numDelete, songHistory, auxiliaryStack);
+                System.out.println();
             }
             input = loopMenu(console);
         }
@@ -57,8 +61,14 @@ public class MusicPlaylist {
         System.out.println("(D) Delete from history");
         System.out.println("(Q) Quit");
         System.out.println();
-        System.out.print("Enter choice: ");
-        return console.nextLine();
+        System.out.print("Enter your choice: ");
+        String choice = console.nextLine();
+        if (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("p") &&
+                !choice.equalsIgnoreCase("h") && !choice.equalsIgnoreCase("v") &&
+                !choice.equalsIgnoreCase("c") && !choice.equalsIgnoreCase("d")) {
+            System.out.println();
+        }
+        return choice;
     }
 
     // This method plays a song only if there is a song in the playlist queue
@@ -69,13 +79,14 @@ public class MusicPlaylist {
     // - songHistory: the history of the songs that have been played
     public static void playSong(Queue<String> songQueue, Stack<String> songHistory) {
         if (songQueue.isEmpty()) {
-            throw new IllegalStateException("Music playlist is empty.");
+            throw new IllegalStateException();
         } else {
             String currentSong = songQueue.remove();
             songHistory.push(currentSong);
             System.out.println("Playing song: " +  currentSong);
-            System.out.println();
         }
+        System.out.println();
+        System.out.println();
     }
 
     // This method prints the previously played songs only if there are songs that have been played
@@ -86,7 +97,7 @@ public class MusicPlaylist {
     // - auxiliaryStack: a temporary stack used to help order Stack<String> songHistory
     public static void printHistory(Stack<String> songHistory, Stack<String> auxiliaryStack) {
         if (songHistory.isEmpty()) {
-            throw new IllegalStateException("Music history is empty.");
+            throw new IllegalStateException();
         } else {
             while (!songHistory.isEmpty()) {
                 String removedSong = songHistory.pop();
@@ -98,6 +109,7 @@ public class MusicPlaylist {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     // This method prints the songs in the playlist, only if there are songs in the playlist
@@ -107,7 +119,7 @@ public class MusicPlaylist {
     // - songQueue: the queue of songs not yet played
     public static void viewPlaylist(Queue<String> songQueue) {
         if (songQueue.isEmpty()) {
-            throw new IllegalStateException("Music playlist is empty.");
+            throw new IllegalStateException();
         } else {
             int queueSize = songQueue.size();
             for (int i = 0; i < queueSize; i++) {
@@ -117,6 +129,7 @@ public class MusicPlaylist {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     // This method deletes songs from the beginning or the end of the listening history, only if
@@ -132,14 +145,13 @@ public class MusicPlaylist {
                                      Stack<String> auxiliaryStack) {
 
         if (songHistory.size() < Math.abs(numDelete)) {
-            throw new IllegalArgumentException("Not enough songs in history to delete.");
+            throw new IllegalArgumentException();
         } else {
             // delete recently played
             if (numDelete > 0) {
                 for (int i = 0; i < numDelete; i++) {
                     songHistory.pop();
                 }
-                printHistory(songHistory, auxiliaryStack);
             } else { // delete from first played
                 numDelete = Math.abs(numDelete);
                 while (!songHistory.isEmpty()) {
@@ -151,8 +163,8 @@ public class MusicPlaylist {
                 while (!auxiliaryStack.isEmpty()) {
                     songHistory.push(auxiliaryStack.pop());
                 }
-                printHistory(songHistory, auxiliaryStack);
             }
         }
+        System.out.println();
     }
 }
