@@ -7,8 +7,8 @@
 import java.util.*;
 import java.io.*;
 
-// This class is a Todo List simulator. You can add and remove things to then be
-// on top of your tasks.
+// This class is a To-do List simulator. You can add and remove a single thing or a range of things
+// from the to-do list. You can also save your list and load your list to/from a file.
 public class TodoListManager {
     public static final boolean EXTENSION_FLAG = false;
 
@@ -46,7 +46,7 @@ public class TodoListManager {
     }
 
     // This method prints the current things to do
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - ArrayList of current things to do
     public static void printTodos(List<String> todos) {
@@ -62,7 +62,7 @@ public class TodoListManager {
 
     // This method adds items to the to-do list, with the user being asked where the item
     // should be placed, except for when the list is empty.
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - Scanner to take in user input
     // - ArrayList of current things to do
@@ -89,7 +89,7 @@ public class TodoListManager {
 
     // This method removes a single item in the to-do list only if there are items in the
     // to-do list.
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - Scanner to take in user input
     // - ArrayList of current things to do
@@ -108,7 +108,7 @@ public class TodoListManager {
     // Extension
     // This method removes a range of items in the to-do list only if there are items in the
     // to-do list.
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - Scanner to take in user input
     // - ArrayList of current things to do
@@ -131,7 +131,7 @@ public class TodoListManager {
 
     // This method clears the current to-do list and loads to-do items from a file into
     // the to-do list
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - Scanner to take in user input
     // - ArrayList of current things to do
@@ -149,7 +149,7 @@ public class TodoListManager {
     }
 
     // This method stores to-do actions into a file
-    // Returns: Printing to console
+    // Returns: Does not return anything, only prints to console
     // Parameters:
     // - Scanner to take in user input
     // - ArrayList of current things to do
