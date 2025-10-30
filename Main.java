@@ -3,12 +3,30 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        Stack<Integer> s3 = new Stack<Integer>();
-        s3.push(2);
-        s3.push(6);
-        s3.push(1);
+        Set<String> birds = new TreeSet<String>();
+        String[] array = {"Hummingbird", "Flicker", "Sparrow", "Snowy Owl"};
+        for (int i = 0; i < array.length; i++) {
+            birds.add(array[i]);
+        }
 
-        mystery1(s3);
+// Answer what prints out here for question 1
+        System.out.println(birds);
+
+        String[] array2 = {"Flicker", "Bushtit"};
+        for (int i = 0; i < array2.length; i++) {
+            birds.remove(array2[i]);
+        }
+
+// Answer what prints out here for question 2
+        System.out.println(birds);
+
+        String[] array3 = {"Stellar's Jay", "Crow", "Sparrow"};
+        for (int i = 0; i < array3.length; i++) {
+            birds.add(array3[i]);
+        }
+
+// Answer what prints out here for question 3
+        System.out.println(birds);
     }
 
     public static void mystery1(Stack<Integer> s) {
