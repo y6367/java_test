@@ -21,12 +21,7 @@ public class MusicPlaylist {
         String input = loopMenu(console);
         while (!input.equalsIgnoreCase("q")) {
             if (input.equalsIgnoreCase("a")) {
-                System.out.print("Enter song name: ");
-                String songName = console.nextLine();
-                System.out.println("Successfully added " + songName);
-                songQueue.add(songName);
-                System.out.println();
-                System.out.println();
+                addSong(console, songQueue);
             } else if (input.equalsIgnoreCase("p")) {
                 playSong(songQueue, songHistory);
             } else if (input.equalsIgnoreCase("h")) {
@@ -70,7 +65,22 @@ public class MusicPlaylist {
         return choice;
     }
 
-    // This method plays a song only if there is a song in the playlist queue
+    // This method adds a song to the music queue.
+    // Returns: Does not return anything, only prints to console
+    // Parameters:
+    // - console: get input from user
+    // - songQueue: the queue of songs not yet played
+    public static void addSong(Scanner console, Queue<String> songQueue) {
+        System.out.print("Enter song name: ");
+        String songName = console.nextLine();
+        System.out.println("Successfully added " + songName);
+        songQueue.add(songName);
+        System.out.println();
+        System.out.println();
+    }
+
+    // This method plays a song only if there is a song in the playlist queue. The song will then
+    // get moved from the playlist queue to the history of played songs.
     // Exception: If there are no songs in the playlist, an IllegalStateException is thrown
     // Returns: Does not return anything, only prints to console
     // Parameters:
@@ -102,9 +112,7 @@ public class MusicPlaylist {
             System.out.println("    " + removedSong);
             auxiliaryStack.push(removedSong);
         }
-        while (!auxiliaryStack.isEmpty()) {
-            songHistory.push(auxiliaryStack.pop());
-        }
+        stackToStack(auxiliaryStack, songHistory);
         System.out.println();
         System.out.println();
     }
@@ -128,10 +136,12 @@ public class MusicPlaylist {
         System.out.println();
     }
 
-    // This method deletes songs from the beginning or the end of the listening history, only if
-    // the input is less than the size of the history
+    // This method deletes songs from the beginning or the end of the listening history. A positive
+    // input will delete from the most recently played songs, while a negative input will delete
+    // from the songs that were first played. This will happen only if the input, whether positive
+    // or negative, is less than the size of the history.
     // Exception: If the size of the history is less than the absolute value of the user input,
-    // an IllegalStateException is thrown
+    // an IllegalArgumentException is thrown
     // Returns: Does not return anything, only prints to console
     // Parameters:
     // - numDelete: the number determining how many songs to be deleted and in which direction
@@ -149,17 +159,24 @@ public class MusicPlaylist {
             }
         } else { // delete from first played
             numDelete = Math.abs(numDelete);
-            while (!songHistory.isEmpty()) {
-                auxiliaryStack.push(songHistory.pop());
-            }
+            stackToStack(songHistory, auxiliaryStack);
             for (int i = 0; i < numDelete; i++) {
                 auxiliaryStack.pop();
             }
-            while (!auxiliaryStack.isEmpty()) {
-                songHistory.push(auxiliaryStack.pop());
-            }
+            stackToStack(auxiliaryStack, songHistory);
         }
         System.out.println();
         System.out.println();
+    }
+
+    // This method moves elements in one stack into another stack
+    // Returns: Does not return anything
+    // Parameters:
+    // - oldStack: The stack that is getting moved from
+    // - newStack: The stack that is getting elements transferred to
+    public static void stackToStack(Stack<String> oldStack, Stack<String> newStack) {
+        while (!oldStack.isEmpty()) {
+            newStack.push(oldStack.pop());
+        }
     }
 }
