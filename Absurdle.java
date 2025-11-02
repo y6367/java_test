@@ -198,7 +198,8 @@ public class Absurdle  {
         }
         for (int i = 0; i < guessStr.size(); i++) {
             String guessLetter = guessStr.get(i);
-            if (guessValues.containsKey(guessLetter.charAt(0)) && guessValues.get(guessLetter.charAt(0)) > 0) {
+            if (guessValues.containsKey(guessLetter.charAt(0)) &&
+                    guessValues.get(guessLetter.charAt(0)) > 0) {
                 guessStr.set(i, YELLOW);
                 int count = guessValues.get(guessLetter.charAt(0));
                 guessValues.put(guessLetter.charAt(0), count - 1);
