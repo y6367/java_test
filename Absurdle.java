@@ -1,6 +1,13 @@
-// TODO: Write your header comment here!
+// Joewah Yu
+// 10/29/2025
+// CSE 122
+// P2: Absurdle
+// TA: Katharine Zhang
 
-// TODO: Write your class comment here! 
+// TODO: Write your class comment here!
+// This class is a game inspired from the popular game Wordle, where there is a word that has to be
+// guessed. There are infinite guesses and no set word, the game tries to keep the game going
+// for as long as possible.
 
 import java.util.*;
 import java.io.*;
@@ -73,11 +80,18 @@ public class Absurdle  {
 
     // TODO: Write your code here! 
 
+    // This method takes words from a file that matches the desired word length into a set before
+    // the game starts. This happens only if the desired word length is more than 1.
+    // Exception: If the desired word length is less than 1, an IllegalArgumentException is thrown
+    // Returns: Returns a HashSet of words for the game.
+    // Parameters:
+    // - contents: contains all the words in the word file
+    // - wordLength: the amount of letters each word should have in the game
     public static Set<String> prepDictionary(List<String> contents, int wordLength) {
-        Set<String> words = new HashSet<>();
         if (wordLength < 1) {
             throw new IllegalArgumentException();
         }
+        Set<String> words = new HashSet<>();
         for (String word : contents) {
             if (word.length() == wordLength) {
                 words.add(word);
@@ -86,43 +100,42 @@ public class Absurdle  {
         return words;
     }
 
+    // This method processes the user's guess to update the set of words that are valid in the
+    // game. This happens only if the set of words is not empty and if the user's guessed word has
+    // the right length.
+    // Exception: If the set of words is empty or the guess from the user does not have the right
+    // length, an IllegalArgumentException is thrown
+    // Returns: Returns a String that has the guessed word translated into the color pattern
+    // Parameters:
+    // - guess: the word that the user has guessed
+    // - words: the set of words that are still in the game
+    // - wordLength: the amount of letters each word should have in the game
     public static String recordGuess(String guess, Set<String> words, int wordLength) {
         if (words.isEmpty() || guess.length() != wordLength) {
             throw new IllegalArgumentException();
         }
         Map<String, Set<String>> possibleWords = new TreeMap<>();
         for (String word : words) {
-            if (word.length() == wordLength) {
-                String pattern = patternFor(word, guess);
-                if (possibleWords.containsKey(pattern)) {
-                    Set<String> current = possibleWords.get(pattern);
-                    current.add(word);
-                    possibleWords.put(pattern,  current);
-                } else {
-                    Set<String> current = new HashSet<>();
-                    current.add(word);
-                    possibleWords.put(pattern,  current);
-                }
+            String pattern = patternFor(word, guess);
+            if (possibleWords.containsKey(pattern)) {
+                Set<String> current = possibleWords.get(pattern);
+                current.add(word);
+                possibleWords.put(pattern,  current);
+            } else {
+                Set<String> current = new HashSet<>();
+                current.add(word);
+                possibleWords.put(pattern,  current);
             }
         }
-
-        String mostPattern = "";
-        int mostWords = 0;
-        for (String pattern : possibleWords.keySet()) {
-            int size = possibleWords.get(pattern).size();
-            if (size > mostWords) {
-                mostPattern = pattern;
-                mostWords = size;
-            }
-        }
-        System.out.println(possibleWords);
-        System.out.println(mostPattern);
-        words.clear();
-        words.addAll(possibleWords.get(mostPattern));
-
+        String mostPattern = containsMost(possibleWords, words);
         return mostPattern;
     }
 
+    // This method turns the user's guess into a pattern
+    // Returns: Returns a String that has the guessed word translated into the color pattern
+    // Parameters:
+    // - word: the word that is being guessed
+    // - guess: the user's guess
     public static String patternFor(String word, String guess) {
         List<String> guessStr = new ArrayList<String>();
         Map<Character, Integer> guessValues = new HashMap<Character, Integer>();
@@ -139,6 +152,42 @@ public class Absurdle  {
                 guessValues.put(letter, 1);
             }
         }
+        convertToPattern(guessStr, word, guessValues);
+        guess = "";
+        for (int i = 0; i < guessStr.size(); i++) {
+            guess += guessStr.get(i);
+        }
+        return guess;
+    }
+
+    // This method identifies the pattern that contains the most words.
+    // Returns: pattern containing the most words
+    // Parameters:
+    // - possibleWords: a map containing patterns along with words that match the pattern
+    // - mostPattern: a string that houses the pattern with the most words that match the pattern
+    // - words: the set of words that are in play
+    public static String containsMost(Map<String, Set<String>> possibleWords, Set<String> words) {
+        String mostPattern = "";
+        int mostWords = 0;
+        for (String pattern : possibleWords.keySet()) {
+            int size = possibleWords.get(pattern).size();
+            if (size > mostWords) {
+                mostPattern = pattern;
+                mostWords = size;
+            }
+        }
+        words.clear();
+        words.addAll(possibleWords.get(mostPattern));
+        return mostPattern;
+    }
+
+    // This changes the letter in the words into colors that represent the pattern
+    // Parameters:
+    // - guessStr: ArrayList containing each letter of the user's guess
+    // - word: the word that is being guessed
+    // - guessValues: counts the characters from the word
+    public static void convertToPattern(List<String> guessStr, String word,
+                                        Map<Character, Integer> guessValues) {
         for (int i = 0; i < guessStr.size(); i++) {
             char letter = word.charAt(i);
             if (guessStr.get(i).equals(String.valueOf(letter))) {
@@ -147,7 +196,6 @@ public class Absurdle  {
                 guessValues.put(letter, count - 1);
             }
         }
-
         for (int i = 0; i < guessStr.size(); i++) {
             String guessLetter = guessStr.get(i);
             if (guessValues.containsKey(guessLetter.charAt(0)) && guessValues.get(guessLetter.charAt(0)) > 0) {
@@ -156,17 +204,11 @@ public class Absurdle  {
                 guessValues.put(guessLetter.charAt(0), count - 1);
             }
         }
-
         for (int i = 0; i < guessStr.size(); i++) {
             String letter = guessStr.get(i);
             if (!letter.equals(GREEN) && !letter.equals(YELLOW)) {
                 guessStr.set(i, GRAY);
             }
         }
-        guess = "";
-        for (int i = 0; i < guessStr.size(); i++) {
-            guess += guessStr.get(i);
-        }
-        return guess;
     }
 }
