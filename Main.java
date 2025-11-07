@@ -2,31 +2,50 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Map<String, List<String>> map = new HashMap<>();
+        List<String> arr1 = new ArrayList<>();
+        List<String> arr2 = new ArrayList<>();
+        List<String> arr3 = new ArrayList<>();
+        List<String> arr4 = new ArrayList<>();
+        List<String> arr5 = new ArrayList<>();
+        arr1.add("poison");
+        arr1.add("grass");
+        map.put("Bulbasaur", arr1);
+        arr2.add("electric");
+        map.put("Pikachu", arr2);
+        arr3.add("grass");
+        arr3.add("poison");
+        map.put("Amoo", arr3);
+        arr4.add("electric");
+        arr4.add("flying");
+        map.put("Zaptos", arr4);
+        arr5.add("electric");
+        map.put("Ampharos", arr5);
 
-        Set<String> birds = new TreeSet<String>();
-        String[] array = {"Hummingbird", "Flicker", "Sparrow", "Snowy Owl"};
-        for (int i = 0; i < array.length; i++) {
-            birds.add(array[i]);
+        Map<Integer, List<String>> result = new TreeMap<>();
+        Map<String, Integer> count = new HashMap<>();
+        for (String pokemon : map.keySet()) {
+            List<String> list = map.get(pokemon);
+            for (String type : list) {
+                if (count.containsKey(type)) {
+                    count.put(type, count.get(type) + 1);
+                } else {
+                    count.put(type, 1);
+                }
+            }
         }
-
-// Answer what prints out here for question 1
-        System.out.println(birds);
-
-        String[] array2 = {"Flicker", "Bushtit"};
-        for (int i = 0; i < array2.length; i++) {
-            birds.remove(array2[i]);
+        for (String type : count.keySet()) {
+            if (result.containsKey(count.get(type))) {
+                List<String> temp = result.get(count.get(type));
+                temp.add(type);
+                result.put(count.get(type), temp);
+            } else {
+                List<String> temp = new ArrayList<>();
+                temp.add(type);
+                result.put(count.get(type), temp);
+            }
         }
-
-// Answer what prints out here for question 2
-        System.out.println(birds);
-
-        String[] array3 = {"Stellar's Jay", "Crow", "Sparrow"};
-        for (int i = 0; i < array3.length; i++) {
-            birds.add(array3[i]);
-        }
-
-// Answer what prints out here for question 3
-        System.out.println(birds);
+        System.out.println(result);
     }
 
     public static void mystery1(Stack<Integer> s) {

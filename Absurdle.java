@@ -7,7 +7,7 @@
 // TODO: Write your class comment here!
 // This class is a game inspired from the popular game Wordle, where there is a word that has to be
 // guessed. There are infinite guesses and no set word, the game tries to keep the game going
-// for as long as possible.
+// for as long as possible based on the current pattern.
 
 import java.util.*;
 import java.io.*;
@@ -80,13 +80,13 @@ public class Absurdle  {
 
     // TODO: Write your code here! 
 
-    // This method takes words from a file that matches the desired word length into a set before
-    // the game starts. This happens only if the desired word length is more than 1.
+    // This method takes words from a file that has the desired word length and gets up into a set
+    // before the game starts. This happens only if the desired word length is more than 1.
     // Exception: If the desired word length is less than 1, an IllegalArgumentException is thrown
     // Returns: Returns a HashSet of words for the game.
     // Parameters:
-    // - contents: contains all the words in the word file
-    // - wordLength: the amount of letters each word should have in the game
+    // - contents: contains all the words in the file
+    // - wordLength: number of letters each word should have in the game
     public static Set<String> prepDictionary(List<String> contents, int wordLength) {
         if (wordLength < 1) {
             throw new IllegalArgumentException();
@@ -100,16 +100,16 @@ public class Absurdle  {
         return words;
     }
 
-    // This method processes the user's guess to update the set of words that are valid in the
-    // game. This happens only if the set of words is not empty and if the user's guessed word has
-    // the right length.
+    // This method processes the user's guess to update the set of words that are still valid in
+    // the game. This happens only if the set of words is not empty and if the user's guessed word
+    // has the right length.
     // Exception: If the set of words is empty or the guess from the user does not have the right
     // length, an IllegalArgumentException is thrown
     // Returns: Returns a String that has the guessed word translated into the color pattern
     // Parameters:
     // - guess: the word that the user has guessed
     // - words: the set of words that are still in the game
-    // - wordLength: the amount of letters each word should have in the game
+    // - wordLength: number of letters each word should have in the game
     public static String recordGuess(String guess, Set<String> words, int wordLength) {
         if (words.isEmpty() || guess.length() != wordLength) {
             throw new IllegalArgumentException();
@@ -152,7 +152,7 @@ public class Absurdle  {
                 guessValues.put(letter, 1);
             }
         }
-        convertToPattern(guessStr, word, guessValues);
+        letterToColor(guessStr, word, guessValues);
         guess = "";
         for (int i = 0; i < guessStr.size(); i++) {
             guess += guessStr.get(i);
@@ -181,12 +181,12 @@ public class Absurdle  {
         return mostPattern;
     }
 
-    // This changes the letter in the words into colors that represent the pattern
+    // This changes the letter in the word into colors that represent the pattern
     // Parameters:
     // - guessStr: ArrayList containing each letter of the user's guess
     // - word: the word that is being guessed
     // - guessValues: counts the characters from the word
-    public static void convertToPattern(List<String> guessStr, String word,
+    public static void letterToColor(List<String> guessStr, String word,
                                         Map<Character, Integer> guessValues) {
         for (int i = 0; i < guessStr.size(); i++) {
             char letter = word.charAt(i);
